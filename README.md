@@ -13,8 +13,8 @@
 >* 用户数据库从Mysql迁移至sqlite
 
 联系邮箱：sangyunxin@gmail.com  
-本项目Github地址：https://github.com/sangyunxin/Net  
-相关教程请关注：https://www.sangyunxin.me/
+本项目Github地址：https://github.com/sangyunxin/Net  
+相关教程请关注：http://www.sangyunxin.me/  
 Copyright 2017 - 2018 Sangyunxin. All Rights Reserved.   
 
 ---  
