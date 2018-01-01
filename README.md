@@ -12,8 +12,6 @@
 >* 增加用户名密码传输加密功能
 >* 用户数据库从Mysql迁移至sqlite
 
----
-
 联系邮箱：sangyunxin@gmail.com  
 本项目Github地址：https://github.com/sangyunxin/Net  
 Copyright 2017 - 2018 Sangyunxin. All Rights Reserved.   
