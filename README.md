@@ -14,8 +14,8 @@
 
 ---
 
-联系邮箱：sangyunxin@gmail.com
-本项目Github地址：https://github.com/sangyunxin/Net
+联系邮箱：sangyunxin@gmail.com  
+本项目Github地址：https://github.com/sangyunxin/Net  
 Copyright 2017 - 2018 Sangyunxin. All Rights Reserved.   
 
 ---  
