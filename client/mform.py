@@ -15,14 +15,14 @@ class MForm(QMainWindow):
         self.ur = ''
         self.stat = self.statusBar()
         self.q = Queue()
-        self.cthread = QThread()
-        self.client = Client(self.q)
-        self.client.statSignal.connect(self.change_stat)
+        self.cthread = QThread()    # 新建一个QThread实例
+        self.client = Client(self.q)    # 新建一个继承QObject类的实例
+        self.client.statSignal.connect(self.change_stat)    
 
-        self.client.moveToThread(self.cthread)
-        self.cthread.started.connect(self.client.run)
+        self.client.moveToThread(self.cthread)  # 利用moveToThread方法把处理程序移动到Qthread上
+        self.cthread.started.connect(self.client.run)   # 绑定两者
 
-        self.client.finishSignal.connect(self.cthread.quit)
+        self.client.finishSignal.connect(self.cthread.quit) # 绑定信号
 
         self.cthread.finished.connect(self.close)
 

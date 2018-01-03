@@ -3,9 +3,9 @@ import time
 import qdarkstyle
 from server import Server
 from PyQt5.QtCore import QThread, pyqtSignal
-from PyQt5.QtWidgets import (QWidget, QApplication, QGroupBox, QPushButton, QLabel,
-     QHBoxLayout, QVBoxLayout, QGridLayout, QFormLayout, QLineEdit, QTextEdit, 
-     QTextBrowser, QFileDialog, QComboBox, QMessageBox, QStackedWidget)
+from PyQt5.QtWidgets import (QWidget, QApplication, QGroupBox, QPushButton, QLabel, QHBoxLayout,
+                             QVBoxLayout, QGridLayout, QFormLayout, QLineEdit, QTextBrowser,
+                             QFileDialog, QComboBox, QMessageBox, QStackedWidget)
 
 info = '''
     欢迎使用本软件！本软件为桑运鑫计算机网络大实验作品。
@@ -21,7 +21,7 @@ info = '''
     * 用户数据库从Mysql迁移至sqlite
     =======================================================
     相关信息请咨询：sangyunxin@gmail.com
-    本项目Github地址：
+    本项目Github地址：https://github.com/sangyunxin/Net
     Copyright 2017 - 2017 Sangyunxin. All Rights Reserved. 
     =======================================================
         '''
@@ -57,8 +57,10 @@ class SForm(QWidget):
 
         iplb = QLabel('服务器地址')
         self.ip = QLineEdit('localhost')
+        self.ip.setEnabled(False)
         portlb = QLabel('开放端口')
         self.port = QLineEdit('1234')
+        self.port.setEnabled(False)
         maxlb = QLabel('最大连接数')
         self.maxnum = QLineEdit('5')
         self.flb = QLabel('工作文件夹')

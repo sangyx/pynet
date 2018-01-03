@@ -1,5 +1,5 @@
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import random
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 # 随机字母:
 def rndChar():

@@ -3,9 +3,9 @@ from os import listdir
 from os.path import getsize, isfile, join
 from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
-from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QTextBrowser, QGridLayout, 
-    QPushButton, QListView, QToolButton, QProgressBar, QSplitter, QFileDialog,
-    QVBoxLayout, QGroupBox)
+from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QTextBrowser, QGridLayout, QPushButton,
+                             QListView, QToolButton, QProgressBar, QFileDialog, QVBoxLayout,
+                             QGroupBox)
 
 info = '''
     欢迎使用本软件！本软件为桑运鑫计算机网络大实验作品。

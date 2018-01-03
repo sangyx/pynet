@@ -2,7 +2,7 @@ from rnd import *
 from plabel import PLable
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QGridLayout, QPushButton, QMessageBox)
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QGridLayout, QPushButton
 
 class Login(QWidget):
 

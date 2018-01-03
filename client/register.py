@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QGridLayout, QPushButton, QRadioButton)
 from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QGridLayout, QPushButton, QRadioButton
 
 class Regis(QWidget):
 

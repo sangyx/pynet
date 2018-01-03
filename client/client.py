@@ -131,7 +131,7 @@ class Client(QObject):
     def deread(self):
         # 接收报头长度
         head_struct = self.s.recv(4)
-        head_len = struct.unpack('i', head_struct)[0]
+        head_len = struct.unpack('i', head_struct)[0] 
 
         # 接收报头
         head_bytes = self.s.recv(head_len)
@@ -148,7 +148,7 @@ class Client(QObject):
 
         # 发送报头的长度
         head_len = len(head_bytes)
-        self.s.send(struct.pack('i', head_len))
+        self.s.send(struct.pack('i', head_len))   # 先发送4字节报头的长度
 
         # 发送报头
         self.s.send(head_bytes)
