@@ -1,3 +1,4 @@
+# 自定义加密算法
 def encrypt(key, s): 
     b = bytearray(str(s).encode('utf-8')) 
     n = len(b) # 求出 b 的字节数 
@@ -14,7 +15,8 @@ def encrypt(key, s):
         c[j+1] = c2 
         j = j+2 
     return c.decode('utf-8') 
- 
+
+# 自定义解密算法
 def decrypt(key, s): 
     c = bytearray(str(s).encode('utf-8')) 
     n = len(c) # 计算 b 的字节数 

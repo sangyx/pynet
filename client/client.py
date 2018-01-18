@@ -21,17 +21,17 @@ class Client(QObject):
     def __init__(self, q):
         super().__init__()
         self.s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        host = socket.gethostname()
-        port = 1234
-        self.s.connect((host, port))
-        self.q = q
-        self.path = '.'
-        self.mutex = Lock()
-        self.flag = True
+        host = socket.gethostname() # 获取主机名
+        port = 1234 # 设置端口
+        self.s.connect((host, port))    # 连接端口
+        self.q = q  # 利用队列在GUI界面和处理线程间传递数据
+        self.path = '.' # 本机文件夹
+        self.mutex = Lock() # 使用锁实现文件传输的次序
+        self.flag = True 
 
     def run(self):
         rthread = Thread(target=self.rec)   # 开启接收服务器信息的线程
-        rthread.daemon = True
+        rthread.daemon = True   # 设置线程随主线程一同退出
 
         # 启动线程运行
         rthread.start() 
@@ -41,34 +41,32 @@ class Client(QObject):
     # 接受服务器信息的线程   
     def rec(self):
         while self.flag:
-            head_dic = self.deread()
-            print(head_dic)
+            head_dic = self.deread()    # 读取信息
             # 对接收的命令进行判断
-            if head_dic['type'] == 'dwnf':  
+            if head_dic['type'] == 'dwnf':      # 若下载文件
                 self.dwnf(head_dic['cnt'])  # 接收下载的文件
             elif head_dic['type'] == 'end':   # 若要求断开连接，则跳出循环，关闭连接
                 break
             else:
                 self.signalEmit(head_dic)   # 发出相应信号  
-        self.end()
+
+        self.end()  # 关闭连接
 
     # 发送信息的线程
     def send(self):
 
-        print('send')
         while True:
             data = self.q.get() # 接受用户命令
-            print(data)
-            if data['type'] == 'sendf':
-                self.sendf(data)
-            elif data['type'] == 'end':
-                self.ensend(data)
+            if data['type'] == 'sendf': # 如果发送文件
+                self.sendf(data)    # 调用方法
+            elif data['type'] == 'end': # 如果结束进程
+                self.ensend(data)   # 通知服务器并跳出循环
                 break
-            elif data['type'] == 'dwnf':
+            elif data['type'] == 'dwnf':    # 如果下载文件
                 self.mutex.acquire()    # 实现多个文件轮流发送
-                self.ensend(data)
+                self.ensend(data)   # 发送控制命令
             else:
-                self.ensend(data)
+                self.ensend(data)   # 其他操作一律发送控制命令给服务器
 
     # 下载文件
     def dwnf(self, cnt):
@@ -88,17 +86,17 @@ class Client(QObject):
 
             # 未接收完成时便一直接收
             while dsize < fsize:
-                block = self.s.recv(1024)
-                f.write(block)
+                block = self.s.recv(1024)   # 接收1024字节的块
+                f.write(block)  # 写入文件
                 dmd5.update(block)  # 更新MD5校验值
-                dsize += len(block)
+                dsize += len(block) # 更新已接受文件大小
 
                 self.uppSignal.emit(dsize)  # 更新进度条
             
-            self.mutex.release()
+            self.mutex.release()    # 释放锁
         
         # 校验文件
-        if fmd5 == dmd5.hexdigest():
+        if fmd5 == dmd5.hexdigest():    # 如果文件相同则发送信号通知用户下载成功
             self.upclistSignal.emit(path)
             self.statSignal.emit(fname + '下载成功')
         else:
@@ -108,23 +106,25 @@ class Client(QObject):
     
     # 上传文件
     def sendf(self, data):
-        data['cnt']['fmd5'] = self.getMD5(data['cnt'])
+        data['cnt']['fmd5'] = self.getMD5(data['cnt'])  # 获取文件的MD5值
 
-        path = data['cnt'].pop('path')
-        fsize = data['cnt']['fsize']
-        fname = data['cnt']['fname']
+        path = data['cnt'].pop('path')  # 删除文件路径信息
+        fsize = data['cnt']['fsize']    # 获取文件大小
+        fname = data['cnt']['fname']    # 获取文件名
 
         self.ensend(data)   # 发送命令
 
-        self.setMaxSignal.emit(fsize)
-        self.uppSignal.emit(0)
+        self.setMaxSignal.emit(fsize)   # 设置进度条最大值
+        self.uppSignal.emit(0)  # 更新进度条
 
+        # 打开文件进行传输
         with open(path + '/' + fname, 'rb') as f:
             dsize = 0
+            # 若未传输完成则一直传输
             while dsize < fsize:
                 block = f.read(1024)
                 self.s.send(block)
-                dsize += len(block)
+                dsize += len(block) # 记录已传输的大小
                 self.uppSignal.emit(dsize)
 
     # 将收到的信息转化为报头
@@ -161,6 +161,7 @@ class Client(QObject):
 
         fmd5 = hashlib.md5()
 
+        # 打开文件逐块统计文件的MD5值
         with open(path + '/' + fname, 'rb') as f:
             dsize = 0
             while dsize < fsize:
@@ -170,27 +171,27 @@ class Client(QObject):
 
         return fmd5.hexdigest()
 
-    # 发送信号
+    # 发送信号通知GUI程序做出相应变化
     def signalEmit(self, data):
         tp = data['type']
         cnt = data['cnt']
-        if tp == 'lg':
+        if tp == 'lg':  # 发送登录结果
             self.statSignal.emit(cnt['msg'])
             self.lgSignal.emit(cnt['result'])
             if cnt['result']:
                 time.sleep(1)
-                self.uplistSignal.emit(cnt['flist'])
-        elif tp == 'rgs':
+                self.uplistSignal.emit(cnt['flist'])    # 更新服务器端文件列表
+        elif tp == 'rgs':   # 发送注册结果
             self.statSignal.emit(cnt['msg'])
             self.rgsSignal.emit(cnt['result'])
-        elif tp == 'msg':
+        elif tp == 'msg':   # 发送服务器消息
             self.msgSignal.emit(cnt['msg'])
-        elif tp == 'sendf':
+        elif tp == 'sendf': # 发送文件传输结果
             if cnt['result']:
                 self.uplistSignal.emit(cnt['flist'])
             self.statSignal.emit(cnt['msg'])
 
     # 结束线程
     def end(self):
-        self.s.close()
-        self.finishSignal.emit()
+        self.s.close()  # 关闭socket
+        self.finishSignal.emit()    # 发出结束信号
