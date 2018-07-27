@@ -19,8 +19,6 @@ Copyright 2017 - 2018 Sangyunxin. All Rights Reserved.  
 
 ---  
 
-
-<<<<<<< HEAD
 #### 实验内容
 了解应用编程接口API，掌握基于socket的网络编程的原理，开发利用socket的TCP文件传输应用程序。该应用需要具备的功能以及实现的要点描述如下：  
 * 该程序应该包括服务器应用程序以及客户应用程序。
@@ -30,5 +28,3 @@ Copyright 2017 - 2018 Sangyunxin. All Rights Reserved.  
 
 #### 实现过程
 1. PyQt5实现文件传输程序
-=======
->>>>>>> b185a21442941e69ef3e872b52861fa65c5f024e
