@@ -14,7 +14,7 @@
 
 联系邮箱：sangyunxin@gmail.com  
 本项目Github地址：https://github.com/sangyunxin/Net  
-系列教程：http://www.sangyunxin.me/  
+系列教程：https://www.sangyx.cn/  
 Copyright 2017 - 2018 Sangyunxin. All Rights Reserved.   
 
 ---  
@@ -27,4 +27,12 @@ Copyright 2017 - 2018 Sangyunxin. All Rights Reserved.  
 * 请注意理解文件传输的含义。文件，指的是一切可以传输的信息，包括文本文件、图片文件、视频文件等。传输，指的是服务器和客户端都可以成为文件的发送者。从客户端的角度来说，客户端向服务器传送文件称为上传，服务器向客户端传送文件称为下载。
 
 #### 实现过程
-1. PyQt5实现文件传输程序
+* [界面绘制](http://www.sangyx.cn/archives/188)
+* [界面美化](https://www.sangyx.cn/archives/195)
+* [事件、信号与槽](https://www.sangyx.cn/archives/224)
+* [PyQt5多线程](https://www.sangyx.cn/archives/228)
+* [数据结构定义——解决TCP粘包问题](https://www.sangyx.cn/archives/234)
+* [功能实现(注册/登录/消息/文件传输/服务日志)](https://www.sangyx.cn/archives/238)
+* [程序打包与发布](https://www.sangyx.cn/archives/241)
+
+水平有限，错漏之处，欢迎指正。
