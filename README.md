@@ -13,7 +13,7 @@
 >* 用户数据库从Mysql迁移至sqlite
 
 联系邮箱：sangyunxin@gmail.com  
-本项目Github地址：https://github.com/sangyunxin/Net  
+本项目Github地址：https://github.com/sangyunxin/PyNet  
 系列教程：https://www.sangyx.cn/  
 Copyright 2017 - 2018 Sangyunxin. All Rights Reserved.   
 
