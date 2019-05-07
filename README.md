@@ -10,12 +10,7 @@
 >* 修复客户端文件显示问题
 >* 增加文件传输MD5校验功能
 >* 增加用户名密码传输加密功能
->* 用户数据库从Mysql迁移至sqlite
-
-联系邮箱：sangyunxin@gmail.com  
-本项目Github地址：https://github.com/sangyunxin/PyNet  
-系列教程：https://www.sangyx.cn/  
-Copyright 2017 - 2018 Sangyunxin. All Rights Reserved.   
+>* 用户数据库从Mysql迁移至sqlit
 
 ---  
 
