@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QTextBrowser, QGridLayo
                              QGroupBox)
 
 info = '''
-    欢迎使用本软件！本程序为桑运鑫计算机网络大实验作品。
+    欢迎使用本软件！本程序为计算机网络大实验作品。
     =======================================================
     当前版本：V1.1
     更新日志:
@@ -17,9 +17,8 @@ info = '''
     * 增加文件传输MD5校验功能
     * 增加用户名密码加密存储功能
     =======================================================
-    相关信息请咨询：sangyunxin@gmail.com
-    本项目Github地址：https://github.com/sangyunxin/Net
-    Copyright 2017 - 2017 Sangyunxin. All Rights Reserved. 
+    本项目Github地址：https://github.com/sangyx/pynet
+    水平有限, 如有BUG, 请自行解决:)
     =======================================================
         '''
 
