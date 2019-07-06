@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QTextBrowser, QGridLayo
                              QGroupBox)
 
 info = '''
-    欢迎使用本软件！本程序为计算机网络大实验作品。
+    欢迎使用！本应用为计算机网络大实验作品
     =======================================================
     当前版本：V1.1
     更新日志:
