@@ -14,19 +14,19 @@ info = '''
 * 服务器点击左下角下拉框切换对不同用户的消息框
 * 请勿在客户端关闭之前关闭服务器
 * 如果客户端崩溃，请先重启服务器再尝试登录
-    '''
+'''
+
 
 class SForm(QWidget):
-
-    finishSignal = pyqtSignal() # 结束线程的信号
+    finishSignal = pyqtSignal()  # 结束线程的信号
 
     def __init__(self):
         super().__init__()
-        self.userBox = {}   # 每个用户对话框的字典
+        self.userBox = {}  # 每个用户对话框的字典
         self.server = None
 
         self.initUI()
-    
+
     # 绘制界面
     def initUI(self):
         self.createGridGroupBox()
@@ -34,7 +34,7 @@ class SForm(QWidget):
         self.creatFormGroupBox()
         mainLayout = QVBoxLayout()
         hboxLayout = QHBoxLayout()
-        hboxLayout.addStretch()  
+        hboxLayout.addStretch()
 
         # 调用方法绘制界面
         self.setWindowTitle('服务器软件')
@@ -66,9 +66,9 @@ class SForm(QWidget):
         self.selpath.clicked.connect(self.showDialog)
 
         self.runbt = QPushButton('启动')
-        self.runbt.clicked.connect(self.startServer)    # 为启动按钮绑定服务器启动方法
+        self.runbt.clicked.connect(self.startServer)  # 为启动按钮绑定服务器启动方法
 
-        layout.setSpacing(10) 
+        layout.setSpacing(10)
         layout.addWidget(iplb, 1, 0)
         layout.addWidget(self.ip, 1, 1)
         layout.addWidget(portlb, 2, 0)
@@ -95,19 +95,17 @@ class SForm(QWidget):
     def creatFormGroupBox(self):
         self.formGroupBox = QGroupBox('消息')
         layout = QFormLayout()
-
         msgbox = QTextBrowser()
 
-        self.stack = QStackedWidget(self)   # 设置一个堆栈以切换不同用户的对话界面
-        self.stack.addWidget(msgbox)    # 每个用户有一个文本框展示信息
+        self.stack = QStackedWidget(self)  # 设置一个堆栈以切换不同用户的对话界面
+        self.stack.addWidget(msgbox)  # 每个用户有一个文本框展示信息
 
         self.userBox['无'] = msgbox
-
         self.showMsg('无', info)
-        
-        self.selur = QComboBox()    # 使用下拉列表选择用户对话框
+
+        self.selur = QComboBox()  # 使用下拉列表选择用户对话框
         self.selur.addItem('无')
-        self.selur.currentTextChanged.connect(self.changeBox)   # 绑定处理方法
+        self.selur.currentTextChanged.connect(self.changeBox)  # 绑定处理方法
         self.selur.setDisabled(True)
 
         # 绘制输入框和发送按钮
@@ -132,7 +130,7 @@ class SForm(QWidget):
         if not upath:
             upath = './sfile'
         self.fpath.setText(upath)
-    
+
     # 开始服务器线程
     def startServer(self):
         host = self.ip.text()
@@ -162,12 +160,12 @@ class SForm(QWidget):
 
             self.sthread.start()
         else:
-            QMessageBox.information(self, '警告', '配置项不能为空!') # 发出警告
-    
+            QMessageBox.information(self, '警告', '配置项不能为空!')  # 发出警告
+
     # 更新服务器日志
     def addLog(self, logmsg):
         self.log.append(logmsg)
-    
+
     # 为选择用户下拉列表中添加用户
     def addUser(self, ur):
         self.selur.addItem(ur)
@@ -178,50 +176,50 @@ class SForm(QWidget):
     # 显示信息
     def showMsg(self, ur, msg):
         self.userBox[ur].append(msg)
-    
+
     # 移除用户
     def removeUser(self, ur):
         i = self.selur.findText(ur)
         self.selur.removeItem(i)
         self.stack.removeWidget(self.userBox[ur])
-    
+
     # 根据选择的用户改变当前对话框
     def changeBox(self, ur):
         if ur != '无':
             self.umsg.setEnabled(True)
             self.sendbt.setEnabled(True)
         self.stack.setCurrentWidget(self.userBox[ur])
-    
+
     # 发送消息
     def sendMsg(self):
         msg = self.umsg.text()
 
         now = time.strftime('%H:%M:%S')
         umsg = '本机(' + now + '): ' + msg
-        self.stack.currentWidget().append(umsg) # 在对话框中展示消息
+        self.stack.currentWidget().append(umsg)  # 在对话框中展示消息
 
-        self.umsg.clear()   # 清空输入框
+        self.umsg.clear()  # 清空输入框
 
-        data = {'type': 'msg', 'cnt': {'msg': msg}} # 构造命令
+        data = {'type': 'msg', 'cnt': {'msg': msg}}  # 构造命令
         ur = self.selur.currentText()
-        
-        self.server.users[ur].put(data) # 发送数据
+
+        self.server.users[ur].put(data)  # 发送数据
 
     # 自定义关闭事件
     def closeEvent(self, event):
         if self.server:
             users = self.server.users
             for ur in users:
-                data = {'type': 'end'}
-                data['ur'] = ur
+                data = {'type': 'end', 'ur': ur}
                 users[ur].put(data)
-        
+
         self.close()
 
-# 服务器程序启动       
+
+# 服务器程序启动
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())   # 美化界面
+    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())  # 美化界面
     sf = SForm()
     sf.show()
     sys.exit(app.exec_())
